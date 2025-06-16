@@ -22,10 +22,10 @@ def is_grammatically_correct(text):
     return len(matches) <= 2
 
 def create_translation_prompt(sentence):
-    return f"Translate the following Gen Z slang into professional workplace language:\n'{sentence}'"
+    return f"Translate the following Gen Z slang into professional workplace language:\n'{sentence}.' \nProvide a single, clear sentence that would be appropriate in a corporate email or professional setting."
 
 def create_slang_generation_prompt():
-    return "Give me a Gen Z slang sentence that would be inappropriate in a corporate email or professional setting. Use modern, casual phrasing."
+    return "Give me a Gen Z slang sentence that would be inappropriate in a corporate email or professional setting. Use modern, casual phrasing. Provide only the slang sentence without any additional context or explanation."
 
 def call_openai(prompt):
     response = clientGPT.chat.completions.create(
@@ -37,8 +37,8 @@ def call_openai(prompt):
 
 def call_claude(prompt):
     response = clientAnthropic.messages.create(
-        model="claude-3-sonnet-20240229",
-        max_tokens=256,
+        model="claude-opus-4-0",
+        max_tokens=1024,
         messages=[{"role": "user", "content": prompt}]
     )
     return response.content[0].text.strip()
